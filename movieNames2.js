@@ -31,22 +31,19 @@ function movieMetadata(path) {
     })
 }
 
+var movies = []
 movieNames('D:/Media').then(function (moviepaths) {
-    moviepaths.forEach(function (moviepath, movies) {
-        movieMetadata(moviepath).then(function (movie, movies) {
-        console.log(movie)
+    moviepaths.forEach(function (moviepath) {
+        movieMetadata(moviepath).then(function (movie) {
+         //console.log(movie)
+        movies.push(movie)
+        // movies = movie
     }, function (error) {
         console.log(error)
     })
     })
 }, function (error) {
     console.log(error)
+}).then(function () {
+    console.log(movies)
 })
-
-// moviepath = 'D:\\Media\\Neighbors.2.Sorority.Rising.2016.HC.720p.HDRiP.800MB.ShAaNiG.mkv'
-
-// movieMetadata(moviepath).then(function (movie) {
-//     console.log(movie)
-// }, function (error) {
-//     console.log(error)
-// })
