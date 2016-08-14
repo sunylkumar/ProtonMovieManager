@@ -1,17 +1,14 @@
 var express = require('express');
 var app = express();
 var fs = require('fs');
+var dir = require('node-dir');
+var probe = require('node-ffprobe');
 // var async = require('async');
 var PORT = 3000;
-
-// var recursive = require('recursive-readdir');
-var probe = require('node-ffprobe');
 process.env.PATH = './ffmpeg/bin'
 
-var dir = require('node-dir');
 
 var dirname = 'D:/Media';
-
 var movies = [];
 
 // dir.files('D:/Media', function (err, files) {
