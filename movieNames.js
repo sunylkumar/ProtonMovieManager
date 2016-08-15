@@ -42,11 +42,3 @@ movieNames('D:/Media').then(function (moviepaths) {
 }, function (error) {
     console.log(error)
 })
-
-// moviepath = 'D:\\Media\\Neighbors.2.Sorority.Rising.2016.HC.720p.HDRiP.800MB.ShAaNiG.mkv'
-
-// movieMetadata(moviepath).then(function (movie) {
-//     console.log(movie)
-// }, function (error) {
-//     console.log(error)
-// })
