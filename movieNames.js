@@ -4,6 +4,8 @@ process.env.PATH = './ffmpeg/bin'
 
 // var recursive = require('recursive-readdir');
 
+var dirname = 'D:/Media';
+var movieData = [];
 
 function movieNames(dirname) {
     return new Promise(function (resolve, reject) {
@@ -20,7 +22,6 @@ function movieNames(dirname) {
 
 function movieMetadata(path) {
     return new Promise(function (resolve, reject) {
-        movies = [];
         probe(path, function (err, probeData) {
             if (err) {
                 reject(err)
@@ -31,14 +32,13 @@ function movieMetadata(path) {
     })
 }
 
-movieNames('D:/Media').then(function (moviepaths) {
-    moviepaths.forEach(function (moviepath, movies) {
-        movieMetadata(moviepath).then(function (movie, movies) {
-        console.log(movie)
-    }, function (error) {
-        console.log(error)
+movieNames(dirname).then(function (moviepaths) {
+    moviepaths.forEach(function (moviepath) {
+        movieData.push(movieMetadata(moviepath))
     })
+
+    Promise.all(movieData).then(function (movies) {
+        console.log('Total movies are : ', movies.length)
+        console.log(movies)
     })
-}, function (error) {
-    console.log(error)
 })
