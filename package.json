@@ -1,24 +1,28 @@
 {
-  "name": "proton",
+  "name": "electron-quick-start",
   "version": "1.0.0",
-  "description": "Proton Movie Manager",
-  "main": "index.js",
+  "description": "A minimal Electron application",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sunylkumar/ProtonMovieManager.git"
+    "url": "git+https://github.com/electron/electron-quick-start.git"
   },
-  "author": "bluerise, Radhika",
-  "license": "ISC",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/sunylkumar/ProtonMovieManager/issues"
+    "url": "https://github.com/electron/electron-quick-start/issues"
   },
-  "homepage": "https://github.com/sunylkumar/ProtonMovieManager#readme",
-  "dependencies": {
-    "express": "^4.14.0",
-    "node-dir": "^0.1.16",
-    "node-ffprobe": "^1.2.2"
+  "homepage": "https://github.com/electron/electron-quick-start#readme",
+  "devDependencies": {
+    "electron-prebuilt": "^1.2.0"
   }
 }
