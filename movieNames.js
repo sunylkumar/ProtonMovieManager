@@ -24,20 +24,16 @@ function movieNames(dirname) {
 function movieMetadata(path) {
     return new Promise(function (resolve, reject) {
         probe(path, function (err, probeData) {
-            if (err) {
-                reject(err)
-            } else {
                 resolve(probeData);
-            }
         })
     })
 }
 //get movie names from the specified directory
 movieNames(dirname).then(function (moviepaths) {
     moviepaths.forEach(function (moviepath) { 
-        movieData.push(movieMetadata(moviepath)) //push a promise into the moviedata array
+        movieData.push(movieMetadata(moviepath)); //push a promise into the moviedata array
     }, function(error){
-        console.log(error)
+        console.log(error);
     })
     //process array of promises to get the movies array
     Promise.all(movieData).then(function (movies) {
@@ -50,7 +46,7 @@ movieNames(dirname).then(function (moviepaths) {
             });
         })
     }, function(error){
-        console.log(error)
+        console.log(error);
     })
 })
 
