@@ -35,10 +35,14 @@ function movieMetadata(path) {
 movieNames(dirname).then(function (moviepaths) {
     moviepaths.forEach(function (moviepath) {
         movieData.push(movieMetadata(moviepath))
+    }, function (error) {
+        console.log(error)
     })
 
     Promise.all(movieData).then(function (movies) {
         console.log('Total movies are : ', movies.length)
         console.log(movies)
+    }, function (error) {
+        console.log(error)
     })
 })
