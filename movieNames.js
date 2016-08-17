@@ -39,7 +39,7 @@ movieNames(dirname).then(function (moviepaths) {
     Promise.all(movieData).then(function (movies) {
         movies.forEach(function(movie){ 
             //Request TMDB for movie info
-            request("https://api.themoviedb.org/3/search/movie?query="+movie+"&api_key=5b0505d97be0c721bce417a10e58113e", function (error, response, body) {
+            request("https://api.themoviedb.org/3/search/movie?query="+movie.filename+"&api_key=5b0505d97be0c721bce417a10e58113e", function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 console.log('\n'+body); // Print the body of request.
               }
