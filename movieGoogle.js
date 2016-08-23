@@ -22,16 +22,7 @@ var videoStat = require('./videoStat')
 //     console.log(error)
 // })
 
-var dirname = 'D:/med'
-var moviePaths = [
-    dirname + '/Neighbors 2 Sorority Rising 2016.mkv',
-    dirname + '/10.Cloverfield.Lane.2016.720p.BluRay.x264-[YTS.AG].mp4',
-    dirname + '/WWW.YTS.AG.jpg',
-    dirname + '/Ice.Age.The.Great.Egg-Scapade.2016.HDRip.XviD.AC3-EVO.avi',
-    dirname + '/Ice.Age.The.Great.Egg-Scapade.2016.HDRip.XviD.AC3-EVO.nfo',
-    dirname + '/sample.avi',
-    dirname + '/Torrent Downloaded From ExtraTorrent.cc.txt'
-]
+
 
 moviePaths.forEach(function (moviePath) {
     videoStat(moviePath).then(function (name) {
