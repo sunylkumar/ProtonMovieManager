@@ -7,12 +7,12 @@ var fs = require('fs');
 
 // var recursive = require('recursive-readdir');
 
-var dirname = 'D:/med';
-var movieData = [];
+var dirname = 'D:/med'
+var movieData = []
 
 function movieNames(dirname) {
     return new Promise(function (resolve, reject) {
-        fs.readdir(dir, function (err, files) {
+        dir.files(dirname, function (err, files) {
             if (err) {
                 reject(err)
             } else {
@@ -50,31 +50,42 @@ function movieMetadata(path) {
 // })
 
 
+// get movie names from the specified directory
 movieNames(dirname).then(function (moviepaths) {
     moviepaths.forEach(function (moviepath) {
-        // movieData.push(movieMetadata(moviepath)); //push a promise into the moviedata array
-        // console.log(moviepath.slice(moviepath.lastIndexOf("\\")+1, moviepath.length))
-        console.log(moviepath)
+         // movieData.push(movieMetadata(moviepath)); //push a promise into the moviedata array
+        console.log(moviepath.slice(moviepath.lastIndexOf("\\")+1, moviepath.length))
+        // console.log(moviepath)
     }, function (error) {
         console.log(error);
     })
+
+    //process array of promises to get the movies array
+    Promise.all(movieData).then(function (movies) {
+        movies.forEach(function (movie) {
+            console.log(movie)
+        }, function (error) {
+            console.log(error);
+        })
+    })
+
 })
 
 
-var path = 'D:/med/Ice.Age.The.Great.Egg-Scapade.2016.HDRip.XviD.AC3-EVO/Ice.Age.The.Great.Egg-Scapade.2016.HDRip.XviD.AC3-EVO.avi'
+// var path = 'D:/med/Ice.Age.The.Great.Egg-Scapade.2016.HDRip.XviD.AC3-EVO/Ice.Age.The.Great.Egg-Scapade.2016.HDRip.XviD.AC3-EVO.avi'
 
 
-function getFilesizeInBytes(filename) {
-    var stats = fs.statSync(filename)
-    var fileSizeInBytes = stats["size"]
+// function getFilesizeInBytes(filename) {
+//     var stats = fs.statSync(filename)
+//     var fileSizeInBytes = stats["size"]
 
-    fileSizeInBytes = (fileSizeInBytes / 1024) / 1024
-    console.log(fileSizeInBytes)
+//     fileSizeInBytes = (fileSizeInBytes / 1024) / 1024
+//     console.log(fileSizeInBytes)
 
-    console.log(fs.statSync(path).isFile())
-}
+//     console.log(fs.statSync(path).isFile())
+// }
 
-getFilesizeInBytes(path)
+// getFilesizeInBytes(path)
 
 
 // var recur = function (dir) {
@@ -91,7 +102,7 @@ getFilesizeInBytes(path)
 //             })
 //         console.log(file)
 //         })
-        
+
 //     });
 // };
-// recur(dirname);
+// recur(dirname)
