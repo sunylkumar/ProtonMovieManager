@@ -3,6 +3,7 @@ var probe = require('node-ffprobe')
 var request = require('request');
 var googleRequest = require('./googleRequest')
 var videoFormat = require('./videoFormat')
+var videoStat = require('./videoStat')
 
 // var name = 'hello.avi';
 // var i = name.lastIndexOf('.');
@@ -21,17 +22,27 @@ var videoFormat = require('./videoFormat')
 //     console.log(error)
 // })
 
-var names = [
-    'Neighbors 2 Sorority Rising 2016.mkv',
+var dirname = 'D:/med'
+var moviePaths = [
+    dirname + '/Neighbors 2 Sorority Rising 2016.mkv',
+    dirname + '/10.Cloverfield.Lane.2016.720p.BluRay.x264-[YTS.AG].mp4',
+    dirname + '/WWW.YTS.AG.jpg',
+    dirname + '/Ice.Age.The.Great.Egg-Scapade.2016.HDRip.XviD.AC3-EVO.avi',
+    dirname + '/Ice.Age.The.Great.Egg-Scapade.2016.HDRip.XviD.AC3-EVO.nfo',
+    dirname + '/sample.avi',
+    dirname + '/Torrent Downloaded From ExtraTorrent.cc.txt'
 ]
 
-names.forEach(function (name) {
-    videoFormat(name).then(function (name) {
-        var i = name.lastIndexOf('.');
-        var movieName = name.slice(0, i).replace(/\(.+?\)/g, '').replace(/\[.+?\]/g, '').replace(/[^a-z0-9+]+/gi, ' ');
-        var url = "https://www.google.com/search?q=" + 'imdb+' + "'" + movieName + "'"
-        // console.log(url)
-        return(url)
+moviePaths.forEach(function (moviePath) {
+    videoStat(moviePath).then(function (name) {
+        return (name)
+    }).then(function (name) {
+        return videoFormat(name).then(function (name) {
+            var i = name.lastIndexOf('.');
+            var movieName = name.slice(0, i).replace(/\(.+?\)/g, '').replace(/\[.+?\]/g, '').replace(/[^a-z0-9+]+/gi, ' ');
+            var url = "https://www.google.com/search?q=" + 'imdb+' + "'" + movieName + "'"
+            return (url)
+        })
     }).then(function (url) {
         googleRequest(url).then(function (movieList) {
             console.log(movieList)
@@ -39,17 +50,23 @@ names.forEach(function (name) {
             console.log(error)
         })
     })
+
 })
 
 
 // names.forEach(function (name) {
-//     var i = name.lastIndexOf('.');
-//     var movieName = name.slice(0, i).replace(/\(.+?\)/g, '').replace(/\[.+?\]/g, '').replace(/[^a-z0-9+]+/gi, ' ');
-//     var url = "https://www.google.com/search?q=" + 'imdb+' + "'" + movieName + "'"
-//     console.log(url)
-//     googleRequest(url).then(function (movieList) {
-//         console.log(movieList)
-//     }, function (error) {
-//         console.log(error)
+//     videoFormat(name).then(function (name) {
+//         var i = name.lastIndexOf('.');
+//         var movieName = name.slice(0, i).replace(/\(.+?\)/g, '').replace(/\[.+?\]/g, '').replace(/[^a-z0-9+]+/gi, ' ');
+//         var url = "https://www.google.com/search?q=" + 'imdb+' + "'" + movieName + "'"
+//         // console.log(url)
+//         return (url)
+//     }).then(function (url) {
+//         googleRequest(url).then(function (movieList) {
+//             console.log(movieList)
+//         }, function (error) {
+//             console.log(error)
+//         })
 //     })
 // })
+

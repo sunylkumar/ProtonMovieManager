@@ -3,11 +3,13 @@ var probe = require('node-ffprobe');
 var request = require('request');
 process.env.PATH = './ffmpeg/bin'
 var fs = require('fs');
-
+var googleRequest = require('./googleRequest')
+var videoFormat = require('./videoFormat')
+var videoStat = require('./videoStat')
 
 // var recursive = require('recursive-readdir');
 
-var dirname = 'D:/med'
+var dirname = 'D:/Media'
 var movieData = []
 
 function movieNames(dirname) {
@@ -51,58 +53,27 @@ function movieMetadata(path) {
 
 
 // get movie names from the specified directory
-movieNames(dirname).then(function (moviepaths) {
-    moviepaths.forEach(function (moviepath) {
-         // movieData.push(movieMetadata(moviepath)); //push a promise into the moviedata array
-        console.log(moviepath.slice(moviepath.lastIndexOf("\\")+1, moviepath.length))
-        // console.log(moviepath)
-    }, function (error) {
-        console.log(error);
-    })
-
-    //process array of promises to get the movies array
-    Promise.all(movieData).then(function (movies) {
-        movies.forEach(function (movie) {
-            console.log(movie)
-        }, function (error) {
+movieNames(dirname).then(function (moviePaths) {
+    moviePaths.forEach(function (moviePath) {
+        videoStat(moviePath).then(function (name) {
+            return (name)
+        }).then(function (name) {
+            return videoFormat(name).then(function (name) {
+                var i = name.lastIndexOf('.');
+                var movieName = name.slice(0, i).replace(/\(.+?\)/g, '').replace(/\[.+?\]/g, '').replace(/[^a-z0-9+]+/gi, ' ');
+                var url = "https://www.google.com/search?q=" + 'imdb+' + "'" + movieName + "'"
+                // console.log(url)
+                return (url)
+            })
+        }).then(function (url) {
+            googleRequest(url).then(function (movieList) {
+                console.log(movieList)
+            }, function (error) {
+                console.log(error)
+            })
+        })
+        .catch(function (error) {
             console.log(error);
         })
     })
-
 })
-
-
-// var path = 'D:/med/Ice.Age.The.Great.Egg-Scapade.2016.HDRip.XviD.AC3-EVO/Ice.Age.The.Great.Egg-Scapade.2016.HDRip.XviD.AC3-EVO.avi'
-
-
-// function getFilesizeInBytes(filename) {
-//     var stats = fs.statSync(filename)
-//     var fileSizeInBytes = stats["size"]
-
-//     fileSizeInBytes = (fileSizeInBytes / 1024) / 1024
-//     console.log(fileSizeInBytes)
-
-//     console.log(fs.statSync(path).isFile())
-// }
-
-// getFilesizeInBytes(path)
-
-
-// var recur = function (dir) {
-//     fs.readdir(dir, function (err, list) {
-//         list.forEach(function (file) {
-//             var file2 = path.resolve(dir, file);
-//             fs.stat(file2, function (err, stats) {
-//                 if (stats.isDirectory()) {
-//                     recur(file2);
-//                 }
-//                 else {
-//                     console.log(file2);
-//                 }
-//             })
-//         console.log(file)
-//         })
-
-//     });
-// };
-// recur(dirname)
