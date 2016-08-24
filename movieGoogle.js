@@ -36,7 +36,7 @@ moviePaths.forEach(function (moviePath) {
         })
     }).then(function (url) {
         googleRequest(url).then(function (movieList) {
-            console.log(movieList)
+            console.log(movieList[0][0])
         }, function (error) {
             console.log(error)
         })

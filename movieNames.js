@@ -1,11 +1,10 @@
 var dir = require('node-dir');
-var probe = require('node-ffprobe');
 var request = require('request');
-process.env.PATH = './ffmpeg/bin'
 var fs = require('fs');
 var googleRequest = require('./googleRequest')
 var videoFormat = require('./videoFormat')
 var videoStat = require('./videoStat')
+var omdb = require('./omdb')
 
 // var recursive = require('recursive-readdir');
 
@@ -24,34 +23,6 @@ function movieNames(dirname) {
     })
 }
 
-
-function movieMetadata(path) {
-    return new Promise(function (resolve, reject) {
-        probe(path, function (err, probeData) {
-            resolve(probeData);
-        })
-    })
-}
-// get movie names from the specified directory
-// movieNames(dirname).then(function (moviepaths) {
-//     moviepaths.forEach(function (moviepath) {
-//         movieData.push(movieMetadata(moviepath)); //push a promise into the moviedata array
-//     }, function (error) {
-//         console.log(error);
-//     })
-
-//     //process array of promises to get the movies array
-//     Promise.all(movieData).then(function (movies) {
-//         movies.forEach(function (movie) {
-//             console.log(movie)
-//         }, function (error) {
-//             console.log(error);
-//         })
-//     })
-
-// })
-
-
 // get movie names from the specified directory
 movieNames(dirname).then(function (moviePaths) {
     moviePaths.forEach(function (moviePath) {
@@ -66,14 +37,24 @@ movieNames(dirname).then(function (moviePaths) {
                 return (url)
             })
         }).then(function (url) {
-            googleRequest(url).then(function (movieList) {
-                console.log(movieList)
-            }, function (error) {
-                console.log(error)
+           return googleRequest(url).then(function (movieList) {
+                console.log(Object.keys(movieList[0])[0])
+                var imdbId = Object.keys(movieList[0])[0]
+                var imdbName = movieList[0][imdbId]
+                var imdbObj = {
+                    id: imdbId,
+                    name: imdbName
+                }
+                // console.log(Object.keys(movieList[0]).length)
+                return (imdbObj)
+            })
+        }).then(function (imdbObj) {
+            omdb(imdbObj.id).then(function (body) {
+                console.log(body)
             })
         })
-        .catch(function (error) {
-            console.log(error);
-        })
+        // .catch(function (error) {
+        //     console.log(error);
+        // })
     })
 })
