@@ -50,7 +50,9 @@ movieNames(dirname).then(function (moviePaths) {
             })
         }).then(function (imdbObj) {
             omdb(imdbObj.id).then(function (body) {
+                console.log()
                 console.log(body)
+                console.log()
             })
         })
         // .catch(function (error) {
