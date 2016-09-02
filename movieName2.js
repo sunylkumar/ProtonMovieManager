@@ -6,7 +6,6 @@ var videoFormat = require('./videoFormat')
 var videoStat = require('./videoStat')
 var omdb = require('./omdb')
 var $ = require('jquery')
-var bootstrap = require('bootstrap')
 
 // var recursive = require('recursive-readdir');
 
@@ -28,9 +27,9 @@ function movieNames(dirname) {
 var populateUI = function(){
     var movieDataDiv = $("#movie_data");
     movieData.forEach(function(movie){
-        movieDataDiv.append()
-    })
+        movieDataDiv.append('<div class="row"><div id="'+movie.filepath+'" class="col-md-1"><img src="'+movie.details.Poster+'" height="150" width="150"></div></div>');
 
+    })
 }
 
 // get movie names from the specified directory
