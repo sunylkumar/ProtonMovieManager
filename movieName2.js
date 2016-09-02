@@ -25,9 +25,10 @@ function movieNames(dirname) {
 }
 
 var populateUI = function(){
-    var movieDataDiv = $("#movie_data");
+    var movieDataDiv = $("#movie_data .row");
     movieData.forEach(function(movie){
-        movieDataDiv.append('<div class="row"><div id="'+movie.filepath+'" class="col-md-1"><img src="'+movie.details.Poster+'" height="150" width="150"></div></div>');
+        // <img src="'+movie.details.Poster+'" height="150" width="150">
+        movieDataDiv.append('<div id="'+movie.filepath+'" class="col-md-2"><div class="card card-block"><img class="card-img-top" src="'+movie.details.Poster+'" ><h4 class="card-text text-center">'+movie.details.Title+'</h4></div></div>');
 
     })
 }
