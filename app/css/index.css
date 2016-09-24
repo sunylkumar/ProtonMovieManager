@@ -1,0 +1,19 @@
+.card-img-top{
+	height: inherit;
+	width: inherit;
+}
+.card-img-top:hover{
+	z-index: 10; 
+    position: relative;
+}
+.card-block{
+	width: 18rem;
+	height: 18rem;
+}
+.row{
+	margin: auto;
+    padding-top: 10px;
+}
+.card-text{
+	overflow: hidden;
+}

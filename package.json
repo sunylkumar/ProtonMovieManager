@@ -19,9 +19,13 @@
   },
   "homepage": "https://github.com/sunylkumar/ProtonMovieManager#readme",
   "dependencies": {
+<<<<<<< HEAD
     "bootstrap": "^4.0.0-alpha.4",
+=======
+>>>>>>> 3874036ab175cb61cbe9768b6ab7726a083b47c9
     "ent": "^2.2.0",
     "express": "^4.14.0",
+    "jquery": "^2.2",
     "node-dir": "^0.1.16"
   },
   "devDependencies": {

@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 const path = require('path')
 const glob = require('glob')
 const electron = require('electron')
 const app = electron.app;
 const ipc = require('electron').ipcMain;
 
+=======
+  const electron = require('electron')
+// Module to control application life.
+const app = electron.app
+// Module to create native browser window.
+>>>>>>> 3874036ab175cb61cbe9768b6ab7726a083b47c9
 const BrowserWindow = electron.BrowserWindow
 var mainWindow = null;
 
