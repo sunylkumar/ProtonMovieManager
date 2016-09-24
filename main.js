@@ -20,7 +20,7 @@ function initialize() {
       title: app.getName()
     }
     mainWindow = new BrowserWindow(windowOptions)
-    mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
+    mainWindow.loadURL(path.join('file://', __dirname, '/app/index.html'))
 
     mainWindow.on('closed', function () {
       mainWindow = null
@@ -48,3 +48,12 @@ function initialize() {
 }
 initialize()
 
+const dialog = require('electron').dialog
+
+ipc.on('open-file-dialog', function (event) {
+  dialog.showOpenDialog({
+    properties: ['openFile', 'openDirectory']
+  }, function (files) {
+    if (files) event.sender.send('selected-directory', files)
+  })
+})
