@@ -4,11 +4,11 @@ const electron = require('electron')
 const app = electron.app;
 const ipc = require('electron').ipcMain;
 
+global.mongoose = require( 'mongoose' ); 
+mongoose.connect('mongodb://localhost/movies');
+
 const BrowserWindow = electron.BrowserWindow
 var mainWindow = null;
-
-
-var movieNames = require('./movieNames')
 
 function initialize() {
 
@@ -29,6 +29,10 @@ function initialize() {
 
   app.on('ready', function () {
     createWindow()
+    mongoose.connection.on('connected',function(){
+      var movieNames = require('./movieNames.js')
+      movieNames('/Users/radhikadesai/Documents/Movies');
+    })
   })
 
   app.on('window-all-closed', function () {

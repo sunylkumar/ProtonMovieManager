@@ -7,14 +7,25 @@ var videoStat = require('./videoStat')
 var movieDirectory = require('./movieDirectory')
 var omdb = require('./omdb')
 var movieResolve = require('./movieResolve')
-var movies = require('./movieDump')
 
 
-module.exports = function movieNames(dirname) {
-    return new Promise(function (resolve, reject) {
-        movies(dirname).then(function (names) {
-            resolve(names)
+module.exports = function movieDump(dirname) {
+        var movieData = []
+        movieDirectory(dirname).then(function (moviePaths) {
+            moviePaths.forEach(function (moviePath) {
+            	var Movie = require('./app/models/movie.js')
+            	Movie.findOne({'filepath':moviePath},function(err,result){
+            		if(result)
+            			console.log("Already exists");
+            		else{
+	            			movieResolve(moviePath).then(function (body) {
+		                    movieData.push(body);
+		                    if(movieData.length === dirname.length){
+		                        return movieData
+	            			}
+	            		})
+            		}
+            	})
+			})
         })
-    })
-
 }

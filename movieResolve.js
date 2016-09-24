@@ -17,8 +17,12 @@ module.exports = function movieResolve(moviePath) {
         return videoFormat(name).then(function (name) {
             var i = name.lastIndexOf('.');
             var movieName = name.slice(0, i).replace(/\(.+?\)/g, '').replace(/\[.+?\]/g, '').replace(/[^a-z0-9+]+/gi, ' ');
+            if(movieName.split(" ").length>0){
+                movieName= movieName.split(" ")
+                movieName=movieName[movieName.length-1];
+            }
             var url = "https://www.google.com/search?q=" + 'imdb+' + "'" + movieName + "'"
-            // console.log(url)
+            console.log("url",url)
             return (url)
         })
     }).then(function (url) {
@@ -30,12 +34,22 @@ module.exports = function movieResolve(moviePath) {
                 id: imdbId,
                 name: imdbName
             }
-            // console.log(Object.keys(movieList[0]).length)
             return (imdbObj)
         })
     }).then(function (imdbObj) {
            return omdb(imdbObj.id).then(function (body) {
             //code to add to object and add it to DB
+            var Movie = require('./app/models/movie.js')
+            var movieObj = new Movie({
+                filepath : moviePath,
+                body:body
+            })
+            movieObj.save(function(err) {
+              if (err) throw err;
+
+              console.log('Movie saved successfully!');
+            })
+             
             return (body)
         })
     }).then(function (body) {
