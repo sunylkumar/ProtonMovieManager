@@ -8,8 +8,8 @@ var movieDirectory = require('./movieDirectory')
 var omdb = require('./omdb')
 var movieResolve = require('./movieResolve')
 // var recursive = require('recursive-readdir');
-var movies = require('./movieDump')
 
+// var dirname = 'D:/Media's
 // var movieData = []
 
 
@@ -35,30 +35,22 @@ var movies = require('./movieDump')
 
 
 
-// module.exports = function names(dirname) {
+module.exports = function movieDump(dirname) {
 
-//     return new Promise(function (resolve, reject) {
-//         var movieData = []
-//         movieDirectory(dirname).then(function (moviePaths) {
-
-//             moviePaths.forEach(function (moviePath) {
-//                 movieResolve(moviePath).then(function (body) {
-//                     movieData.push(body)
-//                 })
-//             })
-
-//             resolve(movieData)
-//         })
-//     })
-
-// }
-
-
-
-module.exports = function movieNames(dirname) {
     return new Promise(function (resolve, reject) {
-        movies(dirname).then(function (names) {
-            resolve(names)
+        var movieData = []
+        movieDirectory(dirname).then(function (moviePaths) {
+
+            moviePaths.forEach(function (moviePath) {
+                movieResolve(moviePath).then(function (body) {
+                    movieData.push(body)
+
+                    if(movieData.length === dirname.length){
+                        resolve(movieData)
+                    }
+                })
+            })
+
         })
     })
 

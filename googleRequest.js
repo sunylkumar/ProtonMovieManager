@@ -22,6 +22,7 @@ module.exports = function (url) {
                         aEnd = body.indexOf('<\/a>', aStart) + 4
                         if (aStart > 0 && aEnd > 0) {
                             lists = body.slice(aStart, aEnd)
+                            // console.log(lists)
                             id = lists.slice(pattern.length, lists.indexOf('/', pattern.length))
                             lists = lists.replace(/\<.+?\>/g, '')
                             title = lists.slice(0, lists.indexOf(')') + 1)
