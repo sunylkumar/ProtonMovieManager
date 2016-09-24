@@ -59,7 +59,7 @@ movieNames(dirname).then(function (moviePaths) {
             omdb(imdbObj.id).then(function (body) {
                 movieData.push({"filepath": moviePath, "details": body});
                 console.log("Movie data is : ",movieData);
-                populateUI();
+                 populateUI();
             })
         })
     })

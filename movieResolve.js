@@ -35,16 +35,11 @@ module.exports = function movieResolve(moviePath) {
         })
     }).then(function (imdbObj) {
            return omdb(imdbObj.id).then(function (body) {
-            // console.log()
+            //code to add to object and add it to DB
             return (body)
-            // console.log(body)
         })
     }).then(function (body) {
         return body
     })
-    // .catch(function (error) {
-        // console.log(error);
-    // })
-
 }
 

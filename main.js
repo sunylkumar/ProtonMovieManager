@@ -19,7 +19,6 @@ function initialize() {
       height: 840,
       title: app.getName()
     }
-
     mainWindow = new BrowserWindow(windowOptions)
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
 
@@ -47,20 +46,5 @@ function initialize() {
 
 
 }
-
 initialize()
-
-
-var dirname = 'D:/Media'
-movieNames(dirname).then(function (names) {
-  event.sender.send('information-dialog-selection', names)
-})
-
-
-
-
-ipc.on('asynchronous-message', function (event, arg) {
-  console.log(arg)
-  event.sender.send('asynchronous-reply', 'pong')
-})
 
