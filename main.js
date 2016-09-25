@@ -37,10 +37,6 @@ function initialize() {
 
   app.on('ready', function () {
     createWindow()
-    mongoose.connection.on('connected',function(){
-      var movieNames = require('./movieNames.js')
-      movieNames('/Users/radhikadesai/Documents/Movies');
-    })
   })
 
   app.on('window-all-closed', function () {
@@ -61,10 +57,10 @@ function initialize() {
 initialize()
 
 function movieDisplay(dirname) {
-  movieNames(dirname).then(function (movieObjs) {
-    console.log(movieObjs)
-     mainWindow.loadURL(path.join('file://', __dirname, '/app/movieDisplay.html'))
-  })
+    movieNames(dirname).then(function (movieObjs) {
+      console.log(movieObjs)
+       mainWindow.loadURL(path.join('file://', __dirname, '/app/movieDisplay.html'))
+    })
 }
 
 

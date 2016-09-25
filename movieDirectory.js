@@ -5,6 +5,7 @@ module.exports = function movieNames(dirname) {
     return new Promise(function (resolve, reject) {
         dir.files(dirname, function (err, files) {
             if (err) {
+            	console.log("error : ",err);
                 reject(err)
             } else {
                 movieLength = files.length

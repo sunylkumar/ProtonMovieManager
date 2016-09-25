@@ -13,6 +13,7 @@ const ipc = require('electron').ipcRenderer
 global.movieLength
 
 module.exports = function movieDump(dirname) {
+    return new Promise(function (resolve, reject) {
         var movieData = []
         movieDirectory(dirname).then(function (moviePaths) {
             moviePaths.forEach(function (moviePath) {
@@ -31,4 +32,5 @@ module.exports = function movieDump(dirname) {
             	})
 			})
         })
+    })
 }
