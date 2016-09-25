@@ -1,58 +1,53 @@
-var express = require('express');
-var app = express();
-var fs = require('fs');
 var dir = require('node-dir');
-var probe = require('node-ffprobe');
-// var async = require('async');
-var PORT = 3000;
-process.env.PATH = './ffmpeg/bin'
+var fs = require('fs');
+
+var dirname = 'D:/Media' 
+
+function movieNames(dirname) {
+    return new Promise(function (resolve, reject) {
+        dir.files(dirname, function (err, files) {
+            if (err) {
+                reject(err)
+            } else {
+                resolve(files)
+            }
+        })
+    })
+}
 
 
-var dirname = 'D:/Media';
-var movies = [];
+function videoStats(filename) {
+    return new Promise(function (resolve, reject) {
+        if (!filename && !fs.statSync(filename).isFile()) {
+            return reject('Invalid file name!');
+        }
+        var fileSizeInBytes = fs.statSync(filename)['size']
+        fileSizeInBytes = ((fileSizeInBytes / 1024) / 1024)
 
-// dir.files('D:/Media', function (err, files) {
-//      if (err) {
-//         console.log(files);
-//     } else {
-//         files.forEach(function (file) {
-//             probe(file, function (err, probeData) {
-//                 if (err) {
+        if (fileSizeInBytes < 50) {
+            reject('Invalid file format')
+        } else {
+            // resolve(filename.slice(filename.lastIndexOf("/")+1, filename.length))
+            resolve(filename.slice(filename.lastIndexOf("\\")+1, filename.length))
+        }
+    })
+}
 
-//                 } else {
-//                     movies.push(probeData)
-//                 }
-//             });
-//         })
-//     }
-// });
+var movieData = []
+movieNames(dirname).then(function (moviePaths) {
+    moviePaths.forEach(function (path) {
+        movieData.push(videoStats(path))
+    }, function (error) {
+        console.log(error)
+    })
 
-dir.paths(dirname, function(err, paths) {
-         if (err) {
-        throw err;
-    } else {
-    console.log('files:\n',paths.files);
-    console.log('subdirs:\n', paths.dirs);
-        paths.files.forEach(function (file) {
-            probe(file, function (err, probeData) {
-                if (err) {
-                    throw err;
-                } else {
-                    movies.push(probeData)
-                    
-                }
-            });
-        });
-        
-    }
+    Promise.all(movieData).then(function (names) {
+    names.forEach(function (movie) {
+        console.log(movie)
+    }, function (error) {
+        console.log(error)
+    })
+})
 })
 
 
-
-
-
-
-
-app.listen(PORT, function () {
-    console.log("listening on " + PORT);
-}); 

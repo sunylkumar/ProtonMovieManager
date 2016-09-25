@@ -17,7 +17,7 @@ module.exports = function movieDump(dirname) {
             moviePaths.forEach(function (moviePath) {
                 movieResolve(moviePath).then(function (body) {
                     movieData.push(body);
-                    if(movieData.length === dirname.length){
+                    if(movieData.length === movieLength){
                         resolve(movieData)
                     }
                 })

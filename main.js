@@ -3,12 +3,14 @@ const glob = require('glob')
 const electron = require('electron')
 const app = electron.app;
 const ipc = require('electron').ipcMain;
+var movieNames = require('./movieNames')
+const dialog = require('electron').dialog
 
 const BrowserWindow = electron.BrowserWindow
 var mainWindow = null;
 
-
-var movieNames = require('./movieNames')
+var dirname
+// 
 
 function initialize() {
 
@@ -20,7 +22,11 @@ function initialize() {
       title: app.getName()
     }
     mainWindow = new BrowserWindow(windowOptions)
-    mainWindow.loadURL(path.join('file://', __dirname, '/app/index.html'))
+    if (!dirname) {
+    mainWindow.loadURL(path.join('file://', __dirname, '/app/openDirectory.html'))
+    } else {
+    mainWindow.loadURL(path.join('file://', __dirname, '/app/movieDisplay.html'))
+    }
 
     mainWindow.on('closed', function () {
       mainWindow = null
@@ -48,13 +54,31 @@ function initialize() {
 }
 initialize()
 
-const dialog = require('electron').dialog
+function movieDisplay(dirname) {
+  movieNames(dirname).then(function (movieObjs) {
+    console.log(movieObjs)
+     mainWindow.loadURL(path.join('file://', __dirname, '/app/movieDisplay.html'))
+  })
+}
+
 
 ipc.on('open-file-dialog', function (event) {
   dialog.showOpenDialog({
     properties: ['openFile', 'openDirectory']
   }, function (files) {
-    if (files) event.sender.send('selected-directory', files)
-    movieNames()
+    if (files) {
+      event.sender.send('selected-directory', files)
+      dirname = files[0];
+      movieDisplay(dirname)
+    }
   })
 })
+
+
+// ipc.on('movies-processed', function (event, arg) {
+//   movieObjs = '${arg}'
+//   console.log(movieObjs)
+//   event.sender.send('asynchronous-reply', 'pong')
+// })
+
+// initialize()

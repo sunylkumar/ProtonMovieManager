@@ -7,6 +7,7 @@ module.exports = function movieNames(dirname) {
             if (err) {
                 reject(err)
             } else {
+                movieLength = files.length
                 resolve(files)
             }
         })

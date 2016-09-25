@@ -39,6 +39,7 @@ module.exports = function movieResolve(moviePath) {
             return (body)
         })
     }).then(function (body) {
+        // console.log(body)
         return body
     })
 }

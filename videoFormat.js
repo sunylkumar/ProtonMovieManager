@@ -1,6 +1,7 @@
 module.exports = function (name) {
     return new Promise(function (resolve, reject) {
         if (!name) {
+            movieLength-=1
             return reject('Invalid file name!');
         }
 
@@ -14,6 +15,7 @@ module.exports = function (name) {
         if (formats[fileFormat] === 1) {
             resolve(name)
         } else {
+            movieLength-=1
             reject('Invalid file format')
         }
 

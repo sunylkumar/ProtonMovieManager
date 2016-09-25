@@ -7,14 +7,24 @@ var videoStat = require('./videoStat')
 var movieDirectory = require('./movieDirectory')
 var omdb = require('./omdb')
 var movieResolve = require('./movieResolve')
-var movies = require('./movieDump')
+var movieDump = require('./movieDump')
+const ipc = require('electron').ipcRenderer
 
+global.movieLength
 
+// var dirname = 'D:/Media'
 module.exports = function movieNames(dirname) {
     return new Promise(function (resolve, reject) {
-        movies(dirname).then(function (names) {
-            resolve(names)
+        movieDump(dirname).then(function (movieObj) {
+            // console.log(movieObj)
+           resolve(movieObj)
         })
     })
-
 }
+
+// module.exports = function movieNames(dirname) {
+//     movieDump(dirname).then(function (movieObj) {
+//         // console.log(movieObj)
+//         ipc.send('movies-processed', movieObj)
+//     })
+// }
