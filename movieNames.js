@@ -15,21 +15,18 @@ global.movieLength
 
 module.exports = function movieDump(dirname) {
     return new Promise(function (resolve, reject) {
+
         var movieData = []
         movieDirectory(dirname).then(function (moviePaths) {
             moviePaths.forEach(function (moviePath) {
-            	Movie.findOne({'filepath':moviePath},function(err,result){
-            		if(result)
-            			console.log("Already exists");
-            		else{
-	            			movieResolve(moviePath).then(function (body) {
-		                    movieData.push(body);
-		                    if(movieData.length === movieLength){
-		                        resolve(movieData)
-	            			}
-	            		})
-            		}
-            	})
+
+				movieResolve(moviePath).then(function (body) {
+					movieData.push(body);
+					if (movieData.length === movieLength) {
+						console.log(movieData)
+						resolve(movieData)
+					}
+				})
 			})
         })
     })

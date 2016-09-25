@@ -9,7 +9,7 @@ module.exports = function (filename) {
         var fileSizeInBytes = fs.statSync(filename)['size']
         fileSizeInBytes = ((fileSizeInBytes / 1024) / 1024)
 
-        if (fileSizeInBytes < 50) {
+        if (fileSizeInBytes < 5) {
             movieLength-=1
             reject('Invalid file format')
         } else {

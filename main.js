@@ -6,7 +6,7 @@ const ipc = require('electron').ipcMain;
 var movieNames = require('./movieNames')
 const dialog = require('electron').dialog
 var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/movies');
+// mongoose.connect('mongodb://localhost/movies');
 
 const BrowserWindow = electron.BrowserWindow
 var mainWindow = null;
