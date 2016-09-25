@@ -22,7 +22,6 @@ module.exports = function movieResolve(moviePath) {
                 movieName=movieName[movieName.length-1];
             }
             var url = "https://www.google.com/search?q=" + 'imdb+' + "'" + movieName + "'"
-            console.log("url",url)
             return (url)
         })
     }).then(function (url) {

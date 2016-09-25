@@ -8,7 +8,7 @@ var movieDirectory = require('./movieDirectory')
 var omdb = require('./omdb')
 var movieResolve = require('./movieResolve')
 const ipc = require('electron').ipcRenderer
-var Movie = require('./app/models/movie.js')
+var Movie = require('./app/models/movie')
 
 
 global.movieLength
@@ -24,8 +24,8 @@ module.exports = function movieDump(dirname) {
             		else{
 	            			movieResolve(moviePath).then(function (body) {
 		                    movieData.push(body);
-		                    if(movieData.length === dirname.length){
-		                        return movieData
+		                    if(movieData.length === movieLength){
+		                        resolve(movieData)
 	            			}
 	            		})
             		}

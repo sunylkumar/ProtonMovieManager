@@ -5,8 +5,7 @@ const app = electron.app;
 const ipc = require('electron').ipcMain;
 var movieNames = require('./movieNames')
 const dialog = require('electron').dialog
-
-global.mongoose = require( 'mongoose' ); 
+var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/movies');
 
 const BrowserWindow = electron.BrowserWindow
@@ -58,8 +57,9 @@ initialize()
 
 function movieDisplay(dirname) {
     movieNames(dirname).then(function (movieObjs) {
-      console.log(movieObjs)
-       mainWindow.loadURL(path.join('file://', __dirname, '/app/movieDisplay.html'))
+      console.log("Movie objs ",movieObjs)
+       mainWindow.loadURL(path.join('file://', __dirname, '/app/movieDisplay.html'));
+       event.sender.send('movie-objects', movieObjs);
     })
 }
 
