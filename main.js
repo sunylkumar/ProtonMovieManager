@@ -56,13 +56,13 @@ function initialize() {
 initialize()
 
 function movieDisplay(dirname) {
-
+  var movieObjects;
   movieNames(dirname).then(function (movieObjs) {
-    console.log("Movie objs ", movieObjs)
+    movieObjects = movieObjs;
     mainWindow.loadURL(path.join('file://', __dirname, '/app/movieDisplay.html'));
   })
   mainWindow.webContents.on('did-finish-load', function () {
-    mainWindow.webContents.send('ping', 'whoooooooh!')
+    mainWindow.webContents.send('ping', movieObjects)
   })
 }
 
