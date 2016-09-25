@@ -8,6 +8,7 @@ var movieDirectory = require('./movieDirectory')
 var omdb = require('./omdb')
 var movieResolve = require('./movieResolve')
 const ipc = require('electron').ipcRenderer
+var Movie = require('./app/models/movie.js')
 
 
 global.movieLength
@@ -17,7 +18,6 @@ module.exports = function movieDump(dirname) {
         var movieData = []
         movieDirectory(dirname).then(function (moviePaths) {
             moviePaths.forEach(function (moviePath) {
-            	var Movie = require('./app/models/movie.js')
             	Movie.findOne({'filepath':moviePath},function(err,result){
             		if(result)
             			console.log("Already exists");
