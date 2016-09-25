@@ -24,9 +24,9 @@ function initialize() {
     }
     mainWindow = new BrowserWindow(windowOptions)
     if (!dirname) {
-    mainWindow.loadURL(path.join('file://', __dirname, '/app/openDirectory.html'))
+      mainWindow.loadURL(path.join('file://', __dirname, '/app/openDirectory.html'))
     } else {
-    mainWindow.loadURL(path.join('file://', __dirname, '/app/movieDisplay.html'))
+      mainWindow.loadURL(path.join('file://', __dirname, '/app/movieDisplay.html'))
     }
 
     mainWindow.on('closed', function () {
@@ -56,11 +56,14 @@ function initialize() {
 initialize()
 
 function movieDisplay(dirname) {
-    movieNames(dirname).then(function (movieObjs) {
-      console.log("Movie objs ",movieObjs)
-       mainWindow.loadURL(path.join('file://', __dirname, '/app/movieDisplay.html'));
-       event.sender.send('movie-objects', movieObjs);
-    })
+
+  movieNames(dirname).then(function (movieObjs) {
+    console.log("Movie objs ", movieObjs)
+    mainWindow.loadURL(path.join('file://', __dirname, '/app/movieDisplay.html'));
+  })
+  mainWindow.webContents.on('did-finish-load', function () {
+    mainWindow.webContents.send('ping', 'whoooooooh!')
+  })
 }
 
 
@@ -75,12 +78,3 @@ ipc.on('open-file-dialog', function (event) {
     }
   })
 })
-
-
-// ipc.on('movies-processed', function (event, arg) {
-//   movieObjs = '${arg}'
-//   console.log(movieObjs)
-//   event.sender.send('asynchronous-reply', 'pong')
-// })
-
-// initialize()

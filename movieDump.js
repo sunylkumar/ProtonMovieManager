@@ -8,21 +8,27 @@ var movieDirectory = require('./movieDirectory')
 var omdb = require('./omdb')
 var movieResolve = require('./movieResolve')
 
-module.exports = function movieDump(dirname) {
+// module.exports = function movieDump(dirname) {
 
-    return new Promise(function (resolve, reject) {
-        var movieData = []
-        movieDirectory(dirname).then(function (moviePaths) {
+//     return new Promise(function (resolve, reject) {
+//         var movieData = []
+//         movieDirectory(dirname).then(function (moviePaths) {
 
-            moviePaths.forEach(function (moviePath) {
-                movieResolve(moviePath).then(function (body) {
-                    movieData.push(body);
-                    if(movieData.length === movieLength){
-                        resolve(movieData)
-                    }
-                })
-            })
+//             moviePaths.forEach(function (moviePath) {
+//                 movieResolve(moviePath).then(function (body) {
+//                     movieData.push(body);
+//                     if(movieData.length === movieLength){
+//                         resolve(movieData)
+//                     }
+//                 })
+//             })
 
-        })
-    })
-}
+//         })
+//     })
+// }
+
+
+ipc.on('selected-directory', function (event, path) {
+//   document.getElementById('selected-file').innerHTML = `You selected: ${path}`
+console.log('IPC MOVIE NAMES')
+})

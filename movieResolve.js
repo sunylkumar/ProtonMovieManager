@@ -6,7 +6,7 @@ var videoFormat = require('./videoFormat')
 var videoStat = require('./videoStat')
 var movieDirectory = require('./movieDirectory')
 var omdb = require('./omdb')
-
+ var Movie = require('./app/models/movie.js')
 // var recursive = require('recursive-readdir');
 
 
@@ -38,7 +38,6 @@ module.exports = function movieResolve(moviePath) {
     }).then(function (imdbObj) {
            return omdb(imdbObj.id).then(function (body) {
             //code to add to object and add it to DB
-            var Movie = require('./app/models/movie.js')
             var movieObj = new Movie({
                 filepath : moviePath,
                 body:body

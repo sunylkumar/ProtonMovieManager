@@ -1,12 +1,18 @@
 const ipc = require('electron').ipcRenderer
 
-// const selectDirBtn = document.getElementById('movie-object')
+// const asyncMsgBtn = document.getElementById('movie-display')
 
-// selectDirBtn.addEventListener('click', function (event) {
-//   ipc.send('open-file-dialog')
+// // asyncMsgBtn.addEventListener('click', function () {
+// //   ipc.send('movie-display-message', 'ping')
+// // })
+
+// ipc.on('movie-display-reply', function (event, arg) {
+//   const message = `Asynchronous message reply: ${arg}`
+//   document.getElementById('movie-displayed').innerHTML = message
 // })
 
-ipc.on('movie-objects', function (event, movieObjs) {
-  document.getElementById('movie-object').innerHTML = "You selected: ${movieObjs}"
-})
 
+ipc.on('ping', (event, message) => {
+  console.log(message)  // Prints 'whoooooooh!'
+  document.getElementById('movie-displayed').innerHTML = message
+})
