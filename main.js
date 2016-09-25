@@ -6,11 +6,13 @@ const ipc = require('electron').ipcMain;
 var movieNames = require('./movieNames')
 const dialog = require('electron').dialog
 
+global.mongoose = require( 'mongoose' ); 
+mongoose.connect('mongodb://localhost/movies');
+
 const BrowserWindow = electron.BrowserWindow
 var mainWindow = null;
 
 var dirname
-// 
 
 function initialize() {
 
@@ -35,6 +37,10 @@ function initialize() {
 
   app.on('ready', function () {
     createWindow()
+    mongoose.connection.on('connected',function(){
+      var movieNames = require('./movieNames.js')
+      movieNames('/Users/radhikadesai/Documents/Movies');
+    })
   })
 
   app.on('window-all-closed', function () {
